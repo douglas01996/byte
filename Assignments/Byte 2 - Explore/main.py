@@ -24,15 +24,18 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 
 # This API key is provided by google as described in the tutorial
-API_KEY = 'XXxxXxXXXXxxNXXxXXXxxxNNXXxxxxxxxXXXxXX'
+API_KEY = 'AIzaSyBHnsLOC4c4NoOyoy-ylym8yqfz6Ojx5Mc'
 
 # This uses discovery to create an object that can talk to the 
 # fusion tables API using the developer key
 service = build('fusiontables', 'v1', developerKey=API_KEY)
 
 # This is the table id for the fusion table
-TABLE_ID = 'NxxxNXxXxxNxXXXXNXxXXXxXxxxNxXxNxXxxXxxX'
-
+#TABLE_ID = '1VlPiBCkYt_Vio-JT3UwM-U__APurJvPb6ZEJPg'
+#TABLE_ID = '19frORJZgv_IolswvXmp38lIbK-3FsppTq2QFXjsZ'
+#TABLE_ID = '19frORJZgv_IolswvXmp38lIbK-3FsppTq2QFXjsZ'
+#TABLE_ID = '1sCV2zqcAIeWgsoyAGWzLFV-zcCena3VtFy9WP-TS'#'19frORJZgv_IolswvXmp38lIbK-3FsppTq2QFXjsZ'
+TABLE_ID = '1Qvm9_HBq9vbg6XvPZ272z0X3KbnI_e_GKTj95ynw'
 # This is the default columns for the query
 query_cols = []
 query_values = ['Forlan'] #Change to be the value(s) you're querying in the column you've specified
@@ -71,7 +74,8 @@ def make_query(cols, values, limit):
     string_values = string_values[2:len(string_values)]
     
     #Change this query to have your corresponding column (in our soccer example, the column for our WHERE is Scorer).
-    query = "SELECT " + string_cols + " FROM " + TABLE_ID + " WHERE Scorer = '" + string_values + "'"
+    #query = "SELECT " + string_cols + " FROM " + TABLE_ID + " WHERE Scorer = '" + string_values + "'"
+    query = "SELECT " + string_cols + " FROM " + TABLE_ID #+ " WHERE Rank < 31"
 
     query = query + " LIMIT " + str(limit)
 
@@ -87,7 +91,7 @@ def make_query(cols, values, limit):
 def index():
     template = JINJA_ENVIRONMENT.get_template('templates/index.html')
     request = service.column().list(tableId=TABLE_ID)
-    res = get_all_data(make_query([], query_values, 5)) #5 is our limit we're passing in
+    res = get_all_data(make_query([], query_values, 30)) #5 is our limit we're passing in
     logging.info('allheaders')
     return template.render(columns=res['columns'], rows = res['rows'] )
 
