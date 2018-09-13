@@ -91,7 +91,7 @@ def make_query(cols, values, limit):
 def index():
     template = JINJA_ENVIRONMENT.get_template('templates/index.html')
     request = service.column().list(tableId=TABLE_ID)
-    res = get_all_data(make_query([], query_values, 30)) #5 is our limit we're passing in
+    res = get_all_data(make_query([], query_values, 20)) #5 is our limit we're passing in
     logging.info('allheaders')
     return template.render(columns=res['columns'], rows = res['rows'] )
 
