@@ -35,7 +35,9 @@ service = build('fusiontables', 'v1', developerKey=API_KEY)
 #TABLE_ID = '19frORJZgv_IolswvXmp38lIbK-3FsppTq2QFXjsZ'
 #TABLE_ID = '19frORJZgv_IolswvXmp38lIbK-3FsppTq2QFXjsZ'
 #TABLE_ID = '1sCV2zqcAIeWgsoyAGWzLFV-zcCena3VtFy9WP-TS'#'19frORJZgv_IolswvXmp38lIbK-3FsppTq2QFXjsZ'
-TABLE_ID = '1Qvm9_HBq9vbg6XvPZ272z0X3KbnI_e_GKTj95ynw'
+#TABLE_ID = '1Qvm9_HBq9vbg6XvPZ272z0X3KbnI_e_GKTj95ynw'
+#TABLE_ID = '1px14HHpT4ftY5w3vnAIv0_HylNrIreOskOtdeXFT'
+TABLE_ID = '1xuk18SXdW7BpeE0-B7wquHHEFEyNIdN6vxUH_Okf'
 # This is the default columns for the query
 query_cols = []
 query_values = ['Forlan'] #Change to be the value(s) you're querying in the column you've specified
@@ -91,7 +93,7 @@ def make_query(cols, values, limit):
 def index():
     template = JINJA_ENVIRONMENT.get_template('templates/index.html')
     request = service.column().list(tableId=TABLE_ID)
-    res = get_all_data(make_query([], query_values, 20)) #5 is our limit we're passing in
+    res = get_all_data(make_query([], query_values, 10)) #5 is our limit we're passing in
     logging.info('allheaders')
     return template.render(columns=res['columns'], rows = res['rows'] )
 
@@ -100,7 +102,7 @@ def update_table():
     logging.info(request.get_json())
     cols = request.json['cols']
     logging.info(cols)
-    result = get_all_data(make_query(cols, query_values, 100))
+    result = get_all_data(make_query(cols, query_values, 10))
     logging.info(result)
     return json.dumps({'content' : result['rows'], 'headers' : result['columns']})
 
